@@ -1,0 +1,77 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       niedererfamily                                            */
+/*    Created:      Sat Nov 23 2019                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// IntakeRight          motor         19              
+// IntakeLeft           motor         20              
+// IntakeArmTiltLeft    motor         17              
+// BlockRampTilt        motor         5               
+// IntakeArmTiltRight   motor         18              
+// FrontBump            bumper        A               
+// BackBump             bumper        B               
+// Drivetrain           drivetrain    1, 10           
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+#include "vex.h"
+
+using namespace vex;
+
+ 
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+
+
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+  
+  IntakeArmTiltRight.spinFor(0.05,turns);
+  IntakeArmTiltLeft.spinFor(-0.05,turns);
+  bool(blockTouch) = FrontBump.pressing();
+  
+   if(blockTouch){
+     Drivetrain.setDriveVelocity(20,percent);
+      IntakeLeft.spinFor(0.5,turns);
+      IntakeRight.spinFor(0.5,turns); 
+      Drivetrain.setDriveVelocity(75,percent);
+      
+    }
+
+  /*Drivetrain.driveFor(48,inches);
+  Drivetrain.turnFor(-90,degrees);
+  Drivetrain.driveFor(48,inches);
+  Drivetrain.turnFor(-90,degrees);
+  Drivetrain.driveFor(48,inches);
+  Drivetrain.turnFor(-90,degrees);
+  Drivetrain.driveFor(48,inches);*/
+  // this is the autonomous strategy TBD
+  
+  BlockRampTilt.spinToPosition(90,degrees);
+  Drivetrain.driveFor(-5,inches); 
+  }
+  
+
+
+  
+
+
+  
+  
+
