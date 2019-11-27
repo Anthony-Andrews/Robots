@@ -1,0 +1,26 @@
+  IntakeArmTiltRight.spinFor(0.05,turns);
+  IntakeArmTiltLeft.spinFor(-0.05,turns);
+  
+  bool(blockTouch) = FrontBump.pressing();
+
+   if(blockTouch){
+     Drivetrain.setDriveVelocity(20,percent);
+      IntakeLeft.spinFor(0.5,turns);
+      IntakeRight.spinFor(0.5,turns); 
+      Drivetrain.setDriveVelocity(75,percent);
+      }
+    
+  Drivetrain.driveFor(24,inches);
+  Drivetrain.driveFor(24,inches);
+  Drivetrain.turnFor(90,degrees);
+  Drivetrain.driveFor(24,inches);
+  Drivetrain.turnFor(90,degrees);
+  Drivetrain.driveFor(24,inches);
+  Drivetrain.turnFor(-90,degrees);
+  Drivetrain.driveFor(12,inches);
+  Drivetrain.turnFor(90,degrees);
+  Drivetrain.driveFor(12,inches);
+
+
+
+}
