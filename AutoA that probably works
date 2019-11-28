@@ -1,0 +1,85 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       niedererfamily                                            */
+/*    Created:      Sat Nov 23 2019                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// IntakeRight          motor         19              
+// IntakeLeft           motor         20              
+// IntakeArmTiltLeft    motor         17              
+// BlockRampTilt        motor         5               
+// IntakeArmTiltRight   motor         18              
+// FrontBump            bumper        A               
+// BackBump             bumper        B               
+// Drivetrain           drivetrain    1, 10           
+// Controller1          controller                    
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+#include "vex.h"
+
+using namespace vex;
+int senseTouch() {
+  int count = 0;
+  bool(blockTouch) = FrontBump.pressing();
+  while(1<2){
+    if(blockTouch){
+      Drivetrain.setDriveVelocity(20,percent);
+        IntakeLeft.spinFor(0.5,turns);
+        IntakeRight.spinFor(0.5,turns); 
+        Drivetrain.setDriveVelocity(75,percent);
+        
+      }
+      vex::task::sleep(25);
+  }
+    return(0);
+}
+// this code senses if the robot is touching a block
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+  int count = 0;
+
+  vex::task t(senseTouch);
+  
+  IntakeArmTiltRight.spinFor(0.05,turns);
+  IntakeArmTiltLeft.spinFor(-0.05,turns);
+  bool(blockTouch) = FrontBump.pressing();
+  Drivetrain.setDriveVelocity(75,percent);
+  // these are the base settings 
+      
+  Drivetrain.driveFor(48,inches);
+  Drivetrain.turnFor(-90,degrees);
+  Drivetrain.driveFor(20,inches);
+  Drivetrain.turnFor(-90,degrees);
+  Drivetrain.driveFor(36,inches);
+      
+
+
+  BlockRampTilt.spinToPosition(0,degrees);
+  Drivetrain.driveFor(-5,inches); 
+  vex::task::sleep(10);
+}
+
+  
+  
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+  
+
