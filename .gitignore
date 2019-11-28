@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+#VexCode
+Autonomous.v5code
+compile_commands.json
