@@ -1,0 +1,79 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       niedererfamily                                            */
+/*    Created:      Sat Nov 23 2019                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// IntakeRight          motor         19              
+// IntakeLeft           motor         20              
+// IntakeArmTiltLeft    motor         17              
+// BlockRampTilt        motor         5               
+// IntakeArmTiltRight   motor         18              
+// FrontBump            bumper        A
+
+#include "vex.h"
+
+using namespace vex;
+int touchCounter = 0;
+motor_group Intake = (IntakeLeft, IntakeRight);
+motor_group Arms = (IntakeArmTiltLeft, IntakeArmTiltRight);
+// this groups the different motors together so they run together
+
+int senseTouch() {
+  
+    bool(blockTouch) = FrontBump.pressing();
+    while(1<2){
+      if(blockTouch){
+        Drivetrain.setDriveVelocity(20,percent);
+        Intake.spinFor(0.5, turns); 
+        Drivetrain.setDriveVelocity(75,percent);
+
+        }
+    }
+      return(0);
+}
+
+// this code senses if the robot is touching a block
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+  vex::thread myThread = vex::thread(senseTouch);
+  //  this allows the 2 threads to run in parallel
+  bool(blockTouch) = FrontBump.pressing();
+  if(blockTouch){
+    touchCounter = touchCounter + 1;
+  }
+  if(BlockRampTilt.position(degrees)>-12.5){
+    Intake.setStopping(hold);
+  }
+  // this makes sure that the intake doesnt spin when we are dumping off blocks
+  while(1){
+    Arms.spinFor(0.05, turns);
+    Drivetrain.setDriveVelocity(75,percent);
+    // these are the base settings 
+        
+    Drivetrain.driveFor(48,inches);
+    if(touchCounter == 4){
+    } else{
+      for(int i=0; i<3; i++){
+        Drivetrain.driveFor(2.5,inches);
+      }
+    }
+    // this tells weather the robot has touched all 4 blocks
+    Drivetrain.turnFor(-90,degrees);
+    Drivetrain.driveFor(20,inches);
+    Drivetrain.turnFor(-90,degrees);
+    Drivetrain.driveFor(36,inches);
+    // this is the AutoA
+    BlockRampTilt.spinToPosition(0,degrees);
+    Drivetrain.driveFor(-5,inches);
+    // this drops of the blocks collected by the robot 
+    this_thread::sleep_for(10);
+  }
+ } 
