@@ -1,0 +1,77 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       Anthony Andrews                                           */
+/*    Created:      Thu Dec 12 2019                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// LeftDrive            motor         8               
+// RightDrive           motor         11              
+// Forklift             motor         17              
+// LeftArm              motor         9               
+// RightArm             motor         2               
+// LeftIntake           motor         19              
+// RightIntake          motor         12              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+#include "vex.h"
+
+using namespace vex;
+
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+  while (true) {
+      RightDrive.spin(directionType::fwd,Controller1.Axis2.value(),velocityUnits::pct);
+      LeftDrive.spin(directionType::fwd, Controller1.Axis3.value(),velocityUnits::pct);
+
+      if(Controller1.ButtonUp.pressing()) {
+        LeftArm.spin(directionType::fwd, 80, velocityUnits::pct);
+        RightArm.spin(directionType::fwd, 80, velocityUnits::pct);
+      }
+
+      else if(Controller1.ButtonDown.pressing()) {
+        LeftArm.spin(directionType::rev, 80, velocityUnits::pct);
+        RightArm.spin(directionType::rev, 80, velocityUnits::pct);
+      }
+
+      else{
+        LeftArm.stop(brakeType::hold);
+        RightArm.stop(brakeType::hold);
+      }
+
+      if(Controller1.ButtonL1.pressing()) {
+        LeftIntake.spin(directionType::rev, 10, velocityUnits::pct);
+        RightIntake.spin(directionType::rev, 10, velocityUnits::pct);
+      }
+
+  
+      else if(Controller1.ButtonL2.pressing()) {
+        LeftIntake.spin(directionType::fwd, 10, velocityUnits::pct);
+        RightIntake.spin(directionType::fwd, 10, velocityUnits::pct);
+      }
+
+      else{
+        LeftIntake.stop(brakeType::hold);
+        RightIntake.stop(brakeType::hold);
+      }
+
+      if(Controller1.ButtonR1.pressing()) {
+        Forklift.spin(directionType::fwd, 60, velocityUnits::pct);
+      }
+
+      else if(Controller1.ButtonR2.pressing()) {
+        Forklift.spin(directionType::rev, 60, velocityUnits::pct);
+      }
+
+      else{
+        Forklift.stop(brakeType::hold);
+      }
+    }
+}
