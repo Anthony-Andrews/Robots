@@ -1,0 +1,69 @@
+
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// IntakeRight          motor         19              
+// IntakeLeft           motor         20              
+// IntakeArmTiltLeft    motor         17              
+// BlockRampTilt        motor         5               
+// IntakeArmTiltRight   motor         18              
+// FrontBump            bumper        A
+
+#include "vex.h"
+
+using namespace vex;
+
+motor_group Intake = (IntakeLeft, IntakeRight);
+motor_group Arms = (IntakeArmTiltLeft, IntakeArmTiltRight);
+// this groups the different motors together so they run together
+int stopwatch = 0;
+int watch() {
+  while(1<2){
+    wait(0.5,seconds);
+    int stopwatch = stopwatch + 1;
+
+      
+  }
+}
+// this code senses if the robot is touching a block
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+  vex::thread myThread = vex::thread(watch);
+  //  this allows the 2 threads to run in parallel
+  bool(blockTouch) = FrontBump.pressing();
+  bool(backTouch) = BackBump.pressing();
+  
+  Drivetrain.setDriveVelocity(60,percent);
+
+
+  // this makes sure that the intake doesnt spin when we are dumping off blocks
+  while(1){
+
+    Arms.spinFor(0.05, turns);
+    Drivetrain.setDriveVelocity(75,percent);
+    while(stopwatch<2){
+      if(backTouch + blockTouch){
+        break;
+      }
+    }
+    // these are the base settings 
+  
+  
+      Drivetrain.driveFor(forward,48,inches);
+      Drivetrain.turnFor(-90,degrees);
+      Drivetrain.driveFor(20,inches);
+      Drivetrain.turnFor(-90,degrees);
+      Drivetrain.driveFor(36,inches);
+    }
+    // this is the AutoA
+    if(BlockRampTilt.position(degrees)>-12.5){
+    Intake.stop();
+      }
+    BlockRampTilt.spinToPosition(0,degrees);
+    Drivetrain.driveFor(-5,inches);
+    // this drops of the blocks collected by the robot 
+    this_thread::sleep_for(10);
+}
+  
