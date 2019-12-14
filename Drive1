@@ -1,0 +1,120 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       Anthony Andrews                                           */
+/*    Created:      Thu Dec 12 2019                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// LeftDrive            motor         8               
+// RightDrive           motor         11              
+// Forklift             motor         17              
+// LeftArm              motor         9               
+// RightArm             motor         2               
+// LeftIntake           motor         19              
+// RightIntake          motor         12              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+#include "vex.h"
+
+using namespace vex;
+
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+  while (true) {
+
+      //Drive (Tank Mode)
+      RightDrive.spin(directionType::fwd,Controller1.Axis2.value(),velocityUnits::pct);
+      LeftDrive.spin(directionType::fwd, Controller1.Axis3.value(),velocityUnits::pct);
+
+      //Raise Arm & Cube Into Tower
+      if(Controller1.ButtonL1.pressing()) {
+        LeftArm.spin(directionType::fwd, 40, velocityUnits::pct);
+        RightArm.spin(directionType::fwd, 40, velocityUnits::pct);
+      }
+
+      //Lower Arm From Tower
+      else if(Controller1.ButtonL2.pressing()) {
+        LeftArm.spin(directionType::rev, 40, velocityUnits::pct);
+        RightArm.spin(directionType::rev, 40, velocityUnits::pct);
+      }
+
+      //Arm Brake
+      else{
+        LeftArm.stop(brakeType::hold);
+        RightArm.stop(brakeType::hold);
+      }
+
+      //Intake In
+      if(Controller1.ButtonR2.pressing()) {
+        LeftIntake.spin(directionType::rev, 100, velocityUnits::pct);
+        RightIntake.spin(directionType::rev, 100, velocityUnits::pct);
+      }
+
+      //Intake Out
+      else if(Controller1.ButtonR1.pressing()) {
+        LeftIntake.spin(directionType::fwd, 75, velocityUnits::pct);
+        RightIntake.spin(directionType::fwd, 75, velocityUnits::pct);
+      }
+
+      //Intake Brake
+      else{
+        LeftIntake.stop(brakeType::hold);
+        RightIntake.stop(brakeType::hold);
+      }
+
+      //Blockslide Up
+      if(Controller1.ButtonRight.pressing()) {
+        Forklift.spin(directionType::fwd, 50, velocityUnits::pct);
+      }
+
+      //Blockslide Down
+      else if(Controller1.ButtonLeft.pressing()) {
+        Forklift.spin(directionType::rev, 50, velocityUnits::pct);
+      }
+
+      //Forklift Brake
+      else{
+       Forklift.stop(brakeType::hold);
+      }
+
+      //Left Arm Adjust Up
+      if(Controller1.ButtonUp.pressing()) {
+       LeftArm.spin(directionType::fwd, 40, velocityUnits::pct);      
+     }
+     
+      //Left Arm Adjust Down
+      else if(Controller1.ButtonDown.pressing()) {
+       LeftArm.spin(directionType::rev, 40, velocityUnits::pct);
+      }
+
+      //Right Arm Adjust Up
+      if(Controller1.ButtonX.pressing()) {
+       RightArm.spin(directionType::fwd, 40, velocityUnits::pct);
+       }
+
+      //Right Arm Adjust Down
+       else if(Controller1.ButtonB.pressing()) {
+        RightArm.spin(directionType::rev, 40, velocityUnits::pct);         
+       }
+      
+          //Marco Time!!!!
+
+       if(Controller1.ButtonY.pressing()) { //Stack Blocks (Y)f
+
+         Forklift.spinToPosition(90, degrees);
+         Forklift.setTimeout(5, seconds); 
+         LeftIntake.spin(directionType::rev, 20, velocityUnits::pct);
+         RightIntake.spin(directionType::rev, 20, velocityUnits::pct);
+         LeftDrive.spin(directionType::rev, 10, velocityUnits::pct);
+         RightDrive.spin(directionType::rev, 10, velocityUnits::pct);
+        }
+         
+    }
+}
